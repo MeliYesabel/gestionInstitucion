@@ -336,7 +336,7 @@ public class GestorDeInstituciones {
 			seleccion = Niveles.values()[indexx - 1];
 			switch (seleccion) {
 			case JARDIN:
-				tomarListaJardin(nueva, fecha);
+				//tomarListaJardin(nueva, fecha);
 				break;
 			case PRIMARIA:
 				tomarListaPrimaria(nueva, fecha);
@@ -387,21 +387,21 @@ public class GestorDeInstituciones {
 		}
 	}
 
-	private static void tomarListaJardin(Institucion nueva, Fecha fecha) {
-		mostrarMenuDeColoresDeSala();
-		Integer index = pedirInt("Ingrese numero");
-
-		Sala salita = nueva.getJardin().getSalitas().get(index-1);
-		for (Integer i = 0; i < salita.getAlumnos().length; i++) {
-			if (salita.getAlumnos()[i] != null) {
-				Boolean confirmar = preguntarPresencia(salita.getAlumnos()[i]);
-				if (!salita.tomarAsistencia(fecha, salita.getAlumnos()[i], confirmar)) {
-					imprimir("Ocurrio un error... Dejaras de tomar asistencia");
-					break;
-				}
-			}
-		}
-	}
+//	private static void tomarListaJardin(Institucion nueva, Fecha fecha) {
+//		mostrarMenuDeColoresDeSala();
+//		Integer index = pedirInt("Ingrese numero");
+//
+//		Sala salita = nueva.getJardin().getSalitas().get(index-1);
+//		for (Integer i = 0; i < salita.getAlumnos().length; i++) {
+//			if (salita.getAlumnos()[i] != null) {
+//				Boolean confirmar = preguntarPresencia(salita.getAlumnos()[i]);
+//				if (!salita.tomarAsistencia(fecha, salita.getAlumnos()[i], confirmar)) {
+//					imprimir("Ocurrio un error... Dejaras de tomar asistencia");
+//					break;
+//				}
+//			}
+//		}
+//	}
 
 	private static Boolean preguntarPresencia(Alumno alumno) {
 		imprimir("" + alumno);
@@ -564,7 +564,7 @@ public class GestorDeInstituciones {
 	private static void modificarDocente(Sala sala) {
 		do {
 			Integer dni = pedirInt("Ingrese DNI del Docente");
-			Docente maestro = sala.buscarMaestroDNI(dni);
+			Docente maestro = sala.buscarMaestroPorDNI(dni);
 			if (maestro != null) {
 				
 					if (sala.bajaDocente(dni)) {
@@ -766,7 +766,7 @@ public class GestorDeInstituciones {
 		Integer dni;
 		do {			
 			 dni = pedirInt("Ingresar dni del docente");
-			if (nueva.buscarDocente(dni) != null && sala.agregarMaestro(nueva.buscarDocente(dni))) {
+			if (nueva.buscarDocente(dni) != null && sala.asignarMaestro(nueva.buscarDocente(dni))) {
 				imprimir("Se agrego correctamente");
 			} else imprimir("Error al agregar");
 			confirmacion = pedirChar("¿Continuar? Si, No");
@@ -816,7 +816,6 @@ public class GestorDeInstituciones {
 	}
 
 	private static void mostrarMenuDeColoresDeSala() {
-
 		ColorDeSala menu[] = ColorDeSala.values();
 		for (Integer i = 0; i < menu.length; i++) {
 			System.out.println(i + 1 + " - " + menu[i]);
