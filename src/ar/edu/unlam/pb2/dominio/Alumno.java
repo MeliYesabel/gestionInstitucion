@@ -15,24 +15,6 @@ public class Alumno extends Persona{
 		this.asistencias = new Asistencia[190]; // segun el Ministerio de Relaciones Exteriores y Culto un ciclo escolar tiene 190 dias
 		this.evaluaciones = new Evaluacion[5];
 	}
-
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public Integer getDni() {
-		return dni;
-	}
-
-	public void setDni(Integer dni) {
-		this.dni = dni;
-	}
-
 	public Integer getEdad() {
 		return edad;
 	}
