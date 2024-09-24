@@ -1,6 +1,6 @@
 package ar.edu.unlam.pb2.dominio;
 
-public class Alumno {
+public class Alumno extends Persona{
 	private String nombre;
 	private Integer dni;
 	private Integer edad;
@@ -8,13 +8,14 @@ public class Alumno {
 	private Asistencia asistencias[];
 	private Evaluacion evaluaciones[];
 
+	
 	public Alumno(String nombre, Integer dni, Integer edad) {
-		this.nombre = nombre;
-		this.dni = dni;
+		super(nombre, dni);
 		this.edad = edad;
 		this.asistencias = new Asistencia[190]; // segun el Ministerio de Relaciones Exteriores y Culto un ciclo escolar tiene 190 dias
 		this.evaluaciones = new Evaluacion[5];
 	}
+
 
 	public String getNombre() {
 		return nombre;

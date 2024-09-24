@@ -1,16 +1,17 @@
 package ar.edu.unlam.pb2.dominio;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Secundaria {
 	
 	private String nombre;
-	private Anio anios [];
+	private ArrayList<Anio> anios;
 	
 	
 	public Secundaria(String nombre, Integer cantidadSalitas) {
 		this.nombre = nombre;
-		this.anios = new Anio[cantidadSalitas];
+		this.anios = new ArrayList<>();
 	}
 
 
