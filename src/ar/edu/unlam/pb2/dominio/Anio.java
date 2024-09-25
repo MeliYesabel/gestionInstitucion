@@ -1,26 +1,31 @@
 package ar.edu.unlam.pb2.dominio;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Anio {
 	
-	private Alumno alumnos[];
+	private ArrayList<Alumno> alumnos;
 	private Docente profesor;
-	private Materia materias[];
+	private ArrayList<Materia> materias;
 	private Numero anio;
 
 	public Anio(Numero anio) {
-		this.alumnos = new Alumno[10];
+		this.alumnos = new ArrayList<>();
 		this.anio = anio;
-		this.materias = new Materia[15];
+		this.materias = new ArrayList<>();
 	}
 
-	public Alumno[] getAlumnos() {
+	public ArrayList<Alumno> getAlumnos() {
 		return alumnos;
 	}
 
-	public void setAlumnos(Alumno[] alumnos) {
+	public void setAlumnos(ArrayList<Alumno> alumnos) {
 		this.alumnos = alumnos;
+	}
+
+	public void setMaterias(ArrayList<Materia> materias) {
+		this.materias = materias;
 	}
 
 	public Docente getProfesor() {
@@ -41,8 +46,8 @@ public class Anio {
 	
 	@Override
 	public String toString() {
-		return anio + ", Docente a cargo= " + profesor + "/n[Alumnos=" + Arrays.toString(alumnos) +  "]/n [Materias="
-				+ Arrays.toString(materias) + "]";
+		return anio + ", Docente a cargo= " + profesor + "/n[Alumnos=" + (alumnos) +  "]/n [Materias="
+				+ (materias) + "]";
 	}
 
 	public Boolean aproboAnioPrevio(Alumno alumno) {
@@ -69,34 +74,30 @@ public class Anio {
 	public Boolean agregarAlumno(Alumno alumno) {
 
 		if (aproboAnioPrevio(alumno)) {
-			for (int i = 0; i < alumnos.length; i++) {
-				if (alumnos[i] == null) {
-					alumnos[i] = alumno;
-				}
-			}
+			alumnos.add(alumno);
+			return true;
 		}
 		return false;
 	}
 
-	public Alumno buscarAlumnoDNI(int dni) {
-		for (int i = 0; i < alumnos.length; i++) {
-			if (alumnos[i] != null && alumnos[i].getDni() == dni) {
-				return alumnos[i];
+	public Alumno buscarAlumnoDNI(Integer dni) {
+		Alumno alumnoBuscado=null;
+		for(Alumno alumno : alumnos) {
+			if(alumno.getDni().equals(dni)) {
+				alumnoBuscado=alumno;
 			}
 		}
-		return null;
+		return alumnoBuscado;
 	}
 
-	public Boolean bajaAlumno(int dni) {
+	public Boolean bajaAlumno(Integer dni) {
+		Alumno alumnoABajar=buscarAlumnoDNI(dni);
+		Boolean bajado=false;
 		if (buscarAlumnoDNI(dni)!= null) {
-			for (int i = 0; i < alumnos.length; i++) {
-				if (alumnos[i].getDni() == dni) {
-					alumnos[i] = null;
-					return true;
-				}
+			alumnos.remove(alumnoABajar);
+			bajado=true;
 			}
-		}
-		return false;
+		return bajado;
 	}
 
 	public Boolean bajaDocente() {
@@ -117,12 +118,12 @@ public class Anio {
 
 	}
 
-	public Boolean tomarAsistencia(Fecha fecha, Alumno alumno, boolean asistencia) {
+	public Boolean tomarAsistencia(Fecha fecha, Alumno alumno, Boolean asistencia) {
 		Asistencia nueva = new Asistencia(fecha, asistencia);
 		if (!existeFecha(fecha)) {
-			for (int i = 0; i < alumno.getAsistencias().length; i++) {
-				if (alumno.getAsistencias()[i] != null) {
-					alumno.getAsistencias()[i] = nueva;
+			for (int i = 0; i < alumno.getAsistencias().size(); i++) {
+				if (alumno.getAsistencias().get(i) != null) {
+					alumno.getAsistencias().set(i, nueva);
 					return true;
 				}
 			}
@@ -132,7 +133,7 @@ public class Anio {
 
 	private Boolean existeFecha(Fecha fecha) {
 
-		if (alumnos[0] != null && alumnos[0].getAsistencias()[0] != null
+		if (alumnos.get(0) != null && alumnos.get(0).getAsistencias().get(0) != null
 				&& alumnos[0].getAsistencias()[0].getFecha().getMes() == fecha.getMes()
 				&& alumnos[0].getAsistencias()[0].getFecha().getDia() == fecha.getDia()) {
 			return true;
@@ -143,54 +144,40 @@ public class Anio {
 
 	public void cargarNota(Integer nota, Alumno alumno, Materia materia) {
 		Evaluacion evaluacion = new Evaluacion(materia, nota);
-		for (int i = 0; i < alumno.getEvaluaciones().length; i++) {
-			if (alumno.getEvaluaciones()[i] != null) {
-				alumno.getEvaluaciones()[i] = evaluacion;
+		for (int i = 0; i < alumno.getEvaluaciones().size(); i++) {
+			if (alumno.getEvaluaciones().get(i) != null) {
+				alumno.getEvaluaciones().set(i, evaluacion);
 				break;
 			}
 		}
 	}
 
-	public Materia[] getMaterias() {
+	public ArrayList<Materia> getMaterias() {
 		return materias;
 	}
 
-	public void setMaterias(Materia materias[]) {
-		this.materias = materias;
-	}
-
+	
 	public Materia buscarMateriaPorNombre(String nombre) {
-		for (int i = 0; i < materias.length; i++) {
-			if (materias[i] != null && materias[i].getNombre().equals(nombre)) {
-				return materias[i];
-				
+		Materia materiaBuscada=null;
+		for(Materia materia : materias) {
+			if(materia.getNombre().equals(nombre)) {
+				materiaBuscada=materia;
 			}
 		}
-
-		return null;
+		return materiaBuscada;
 	}
 
 	public Boolean agregarMaterias(Materia materia) {
-		if (buscarMateriaPorNombre(materia.getNombre()) == null) {
-			for (int i = 0; i < materias.length; i++) {
-				if (materias[i] == null) {
-					materias[i] = materia;
-					return true;
-				}
-			}
-		}
-		return false;
+		return materias.add(materia);
 	}
 	
 	public Boolean eliminarMateria(Materia materia) {
-		if (buscarMateriaPorNombre(materia.getNombre()) != null) {
-			for (int i = 0; i < materias.length; i++) {
-				if (materias[i] != null && materias[i].getNombre().equals(materia.getNombre())) {
-					materias[i] = null;
-					return true;
-				}
-			}
+		Materia materiaABajar=buscarMateriaPorNombre(materia.getNombre());
+		Boolean bajado=false;
+		if (materiaABajar != null) {
+			materias.remove(materiaABajar);
+			bajado=true;
 		}
-		return false;
+		return bajado;
 	}
 }
