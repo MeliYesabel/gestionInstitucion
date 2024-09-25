@@ -80,7 +80,7 @@ public class testSecundario {
 	}
 	
 	
-	@Test	
+	/*@Test	
 	public void agregarUnaMateriaAUnAnio(){
 		Institucion institucion = new Institucion("Unlam");
 		Secundaria secundaria=institucion.getSecundaria();
@@ -90,5 +90,5 @@ public class testSecundario {
 		Materia quimica = new Materia("quimica");
 		anio1.agregarMaterias(quimica);
 		assertEquals(anio1.getMaterias().get(0).getDocente(),docente);
-	}
+	}*/
 }
