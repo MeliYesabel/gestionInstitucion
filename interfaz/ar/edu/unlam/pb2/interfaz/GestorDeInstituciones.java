@@ -335,7 +335,7 @@ public class GestorDeInstituciones {
 			seleccion = Niveles.values()[indexx - 1];
 			switch (seleccion) {
 			case JARDIN:
-				tomarListaJardin(nueva, fecha);
+				//tomarListaJardin(nueva, fecha);
 				break;
 			case PRIMARIA:
 				tomarListaPrimaria(nueva, fecha);
@@ -809,7 +809,6 @@ public class GestorDeInstituciones {
 	}
 
 	private static void mostrarMenuDeColoresDeSala() {
-
 		ColorDeSala menu[] = ColorDeSala.values();
 		for (Integer i = 0; i < menu.length; i++) {
 			System.out.println(i + 1 + " - " + menu[i]);
