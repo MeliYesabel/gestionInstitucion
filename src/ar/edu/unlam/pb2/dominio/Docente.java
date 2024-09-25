@@ -1,35 +1,15 @@
 package ar.edu.unlam.pb2.dominio;
 
-public class Docente {
-	
+public class Docente extends Persona{
 	private String nombre;
 	private Integer dni;
 	private HistorialAcademico experiencia;
 	
+
 	public Docente(String nombre, Integer dni) {
-		this.nombre = nombre;
-		this.dni = dni;
+		super(nombre, dni);
 	}
-
-
-	public String getNombre() {
-		return nombre;
-	}
-
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-
-	public Integer getDni() {
-		return dni;
-	}
-
-
-	public void setDni(Integer dni) {
-		this.dni = dni;
-	}
+	
 	public HistorialAcademico getExperiencia() {
 		return experiencia;
 	}

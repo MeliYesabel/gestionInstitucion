@@ -39,30 +39,30 @@ public class Sala {
 		this.color = color;
 	}
 
-//	public Boolean tomarAsistencia(Fecha fecha, Alumno alumno, Boolean asistencia) {
-//		Asistencia nueva = new Asistencia(fecha, asistencia);
-//		if (!existeFecha(fecha)) {
-//			for (Integer i = 0; i < alumno.getAsistencias().length; i++) {
-//				if (alumno.getAsistencias()[i] != null) {
-//					alumno.getAsistencias()[i] = nueva;
-//					return true;
-//				}
-//			}
-//		}	
-//		return false;
-//	}
+	public Boolean tomarAsistencia(Fecha fecha, Alumno alumno, Boolean asistencia) {
+		Asistencia nueva = new Asistencia(fecha, asistencia);
+		if (!existeFecha(fecha)) {
+			for (Integer i = 0; i < alumno.getAsistencias().size(); i++) {
+				if (alumno.getAsistencias().get(i) != null) {
+					alumno.getAsistencias().set(i, nueva); ;
+					return true;
+				}
+			}
+			
+		}	
+		return false;
+	}
 
-//	public Boolean existeFecha(Fecha fecha) {
-//		for (Integer i = 0; i < alumnos[1].getAsistencias().length; i++) {
-//			if (alumnos[i] != null && alumnos[1].getAsistencias()[i] != null 
-//				&& alumnos[1].getAsistencias()[i].getFecha().getMes() == fecha.getMes() 
-//				&& alumnos[1].getAsistencias()[i].getFecha().getDia() == fecha.getDia()) {
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
-//	
+	public Boolean existeFecha(Fecha fecha) {
+			if (alumnos.get(0) != null && alumnos.get(0).getAsistencias().get(0) != null 
+				&& alumnos.get(0).getAsistencias().get(0).getFecha().getMes() == fecha.getMes() 
+				&& alumnos.get(0).getAsistencias().get(0).getFecha().getDia() == fecha.getDia()) {
+				return true;
+			
+		}
+		return false;
+	}
+	
 
 	public Boolean agregarAlumno(Alumno alumno) {
 		

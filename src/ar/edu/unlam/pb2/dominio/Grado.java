@@ -1,25 +1,28 @@
 package ar.edu.unlam.pb2.dominio;
 
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 public class Grado {
 
-	private Alumno alumnos[];
+	private LinkedList<Alumno> alumnos;
 	private Docente docente;
 	private Numero grado;
 	private final Integer EDAD_MINIMA;
+	private Integer capacidad;
 
 	public Grado(Numero grado) {
-		this.alumnos = new Alumno[10];
+		this.alumnos = new LinkedList<>();
 		this.grado = grado;
 		EDAD_MINIMA = grado.ordinal() + 6;
 	}
 
-	public Alumno[] getAlumnos() {
+	public LinkedList<Alumno> getAlumnos() {
 		return alumnos;
 	}
 
-	public void setAlumnos(Alumno[] alumnos) {
+	public void setAlumnos(LinkedList<Alumno> alumnos) {
 		this.alumnos = alumnos;
 	}
 
@@ -44,13 +47,9 @@ public class Grado {
 	}
 
 	public Boolean agregarAlumno(Alumno alumno) {
-		if (alumno.getEdad() >= EDAD_MINIMA) {
-			for (Integer i = 0; i < alumnos.length; i++) {
-				if (alumnos[i] == null) {
-					alumnos[i] = alumno;
-					return true;
-				}
-			}
+		if (alumnos.size() < capacidad) {
+			alumnos.add(alumno);
+			return true;
 		}
 		return false;
 	}
@@ -73,13 +72,9 @@ public class Grado {
 	public Boolean bajaAlumno(Integer dni) {
 		Alumno deBaja = buscarAlumnoDNI(dni);
 		if (deBaja != null) {
-			for (Integer i = 0; i < alumnos.length; i++) {
-				if (alumnos[i].equals(deBaja)) {
-					alumnos[i] = null;
-					return true;
-				}
+			alumnos.remove(deBaja);
+			return true;
 			}
-		}
 		return false;
 	}
 
@@ -93,21 +88,20 @@ public class Grado {
 	}
 
 	public Alumno buscarAlumnoDNI(Integer dni) {
-
-		for (Integer i = 0; i < alumnos.length; i++) {
-			if (alumnos[i] != null && alumnos[i].getDni() == dni) {
-				return alumnos[i];
+		for(Alumno alumno : alumnos) {
+			if(alumno.getDni().equals(dni)) {
+				return alumno;
 			}
 		}
 		return null;
 	}
 
-	public Boolean tomarAsistencia(Fecha fecha, Alumno alumno, boolean asistencia) {
+	public Boolean tomarAsistencia(Fecha fecha, Alumno alumno, Boolean asistencia) {
 		Asistencia nueva = new Asistencia(fecha, asistencia);
 		if (!existeFecha(fecha)) {
-			for (Integer i = 0; i < alumno.getAsistencias().length; i++) {
-				if (alumno.getAsistencias()[i] != null) {
-					alumno.getAsistencias()[i] = nueva;
+			for (int i = 0; i < alumno.getAsistencias().size(); i++) {
+				if (alumno.getAsistencias().get(i) != null) {
+					alumno.getAsistencias().set(i, nueva);
 					return true;
 				}
 			}
@@ -117,9 +111,9 @@ public class Grado {
 
 	private Boolean existeFecha(Fecha fecha) {
 
-		if (alumnos[0] != null && alumnos[0].getAsistencias()[0] != null
-				&& alumnos[1].getAsistencias()[0].getFecha().getMes() == fecha.getMes()
-				&& alumnos[1].getAsistencias()[0].getFecha().getDia() == fecha.getDia()) {
+		if (alumnos.get(0) != null && alumnos.get(0).getAsistencias().get(0) != null
+				&& alumnos.get(0).getAsistencias().get(0).getFecha().getMes() == fecha.getMes()
+				&& alumnos.get(0).getAsistencias().get(0).getFecha().getDia() == fecha.getDia()) {
 			return true;
 
 		}
@@ -129,17 +123,26 @@ public class Grado {
 	public void cargarNota(Integer nota, Alumno alumno) {
 		Evaluacion evaluacion = new Evaluacion(nota);
 		
-		for (Integer i = 0; i < alumno.getEvaluaciones().length; i++) {
-			if (alumno.getEvaluaciones()[i] != null) {
-				alumno.getEvaluaciones()[i] = evaluacion;
+		for (Integer i = 0; i < alumno.getEvaluaciones().size(); i++) {
+			if (alumno.getEvaluaciones().get(i) != null) {
+				alumno.getEvaluaciones().set(0, evaluacion);
 				break;
 			}
-		}		
+		}	
+		
 	}
 
 	@Override
 	public String toString() {
-		return grado + "\n" + docente + "\nalumnos=" + Arrays.toString(alumnos);
+		return grado + "\n" + docente + "\nalumnos=" + alumnos;
+	}
+
+	public Integer getCapacidad() {
+		return capacidad;
+	}
+
+	public void setCapacidad(Integer capacidad) {
+		this.capacidad = capacidad;
 	}
 
 }

@@ -1,11 +1,12 @@
 package ar.edu.unlam.pb2.dominio;
 
-public class Materia {
+public class Persona {
 	private String nombre;
-	private Docente profesor;
-
-	public Materia(String nombre) {
+	private Integer dni;
+	
+	public Persona(String nombre, Integer dni) {
 		this.nombre = nombre;
+		this.dni = dni;
 	}
 
 	public String getNombre() {
@@ -16,12 +17,13 @@ public class Materia {
 		this.nombre = nombre;
 	}
 
-	public Docente getProfesor() {
-		return profesor;
+	public Integer getDni() {
+		return dni;
 	}
 
-	public void setProfesor(Docente profesor) {
-		this.profesor = profesor;
+	public void setDni(Integer dni) {
+		this.dni = dni;
 	}
-
+	
+	
 }

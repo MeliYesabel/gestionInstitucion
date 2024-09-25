@@ -72,7 +72,7 @@ public class GestorDeInstituciones {
 			imprimir("Menu gestion de materias");
 			mostrarMenuPrimariaSecundaria();
 			index = pedirInt("Indica la sala a gestionar.");
-			aula = nueva.getSecundaria().getAnios()[index - 1];
+			aula = nueva.getSecundaria().getAnios().get(index - 1);
 			mostrarMenugestionDeMaterias();
 			index = pedirInt("Ingrese la opcion deseada");
 			eleccion = MenuGestionMateriasSecundaria.values()[index - 1];
@@ -98,13 +98,12 @@ public class GestorDeInstituciones {
 	}
 
 	private static void verMaterias(Anio aula) {
-		if (aula.getMaterias()[0] != null) {
+		if (aula.getMaterias() != null) {
 			imprimir("Materias de " + aula.getAnio());
 			Integer indice = 1;
-			for (Integer i = 0; i < aula.getMaterias().length; i++) {
-				if (aula.getMaterias()[i] != null) {
-					imprimir(indice++ + " - " +  aula.getMaterias()[i].getNombre());
-				}
+			
+			for (Materia materia : aula.getMaterias()) {
+				imprimir(indice++ + " - " +  materia.getNombre());
 			}
 		}	
 	}
@@ -254,7 +253,7 @@ public class GestorDeInstituciones {
 					break;
 				case SECUNDARIA:
 					mostrarMenuPrimariaSecundaria();
-					cargarNotaSecundaria(nueva, docente);
+					//cargarNotaSecundaria(nueva, docente);
 				case FINALIZAR:
 					break;
 				default:
@@ -273,14 +272,14 @@ public class GestorDeInstituciones {
 		Integer index = pedirInt("Ingrese numero");
 		Grado curso = nueva.getPrimaria().getGrados()[index - 1];
 		if (curso.tieneExperiencia(docente)) {
-			for (Integer i = 0; i < curso.getAlumnos().length; i++) {
-				if (curso.getAlumnos()[i] != null) {
+			for (Integer i = 0; i < curso.getAlumnos().size(); i++) {
+				if (curso.getAlumnos().get(i) != null) {
 					Integer nota;
 					do {
-						nota = pedirInt("Evalue de 1 a 10 a " + curso.getAlumnos()[i].getNombre());
+						nota = pedirInt("Evalue de 1 a 10 a " + curso.getAlumnos().get(i).getNombre());
 					} while (nota > 10 && nota < 0);
 
-					curso.cargarNota(nota, curso.getAlumnos()[i]);
+					curso.cargarNota(nota, curso.getAlumnos().get(i));
 				}
 			}
 		} else
@@ -288,38 +287,38 @@ public class GestorDeInstituciones {
 
 	}
 
-	private static void cargarNotaSecundaria(Institucion nueva, Docente docente) {
-		Integer index = pedirInt("Ingrese numero");
-		Anio curso = nueva.getSecundaria().getAnios()[index - 1];
-		mostrarMenuMaterias(curso);
-		String nombre = pedirString("Ingresa nombre de la materia a evaluar");
-
-		if (curso.buscarMateriaPorNombre(nombre) != null) {
-			if (curso.tieneExperienciaEnMateria(curso.buscarMateriaPorNombre(nombre))) {
-				for (Integer i = 0; i < curso.getAlumnos().length; i++) {
-					if (curso.getAlumnos()[i] != null) {
-						Integer nota;
-						do {
-							nota = pedirInt("Evalue de 1 a 10 a " + curso.getAlumnos()[i].getNombre());
-						} while (nota > 10 && nota < 0);
-
-						curso.cargarNota(nota, curso.getAlumnos()[i], curso.buscarMateriaPorNombre(nombre));
-					}
-				}
-			} else
-				imprimir("No puedes evaluar estos alumnos ya que no tienes los requerimientos.");
-
-		} else
-			imprimir("La materia que ingresaste no existe");
-
-	}
+//	private static void cargarNotaSecundaria(Institucion nueva, Docente docente) {
+//		Integer index = pedirInt("Ingrese numero");
+//		Anio curso = nueva.getSecundaria().getAnios().get(index -1);
+//		mostrarMenuMaterias(curso);
+//		String nombre = pedirString("Ingresa nombre de la materia a evaluar");
+//
+//		if (curso.buscarMateriaPorNombre(nombre) != null) {
+//			if (curso.tieneExperienciaEnMateria(curso.buscarMateriaPorNombre(nombre))) {
+//				for (Integer i = 0; i < curso.getAlumnos().length; i++) {
+//					if (curso.getAlumnos()[i] != null) {
+//						Integer nota;
+//						do {
+//							nota = pedirInt("Evalue de 1 a 10 a " + curso.getAlumnos()[i].getNombre());
+//						} while (nota > 10 && nota < 0);
+//
+//						curso.cargarNota(nota, curso.getAlumnos()[i], curso.buscarMateriaPorNombre(nombre));
+//					}
+//				}
+//			} else
+//				imprimir("No puedes evaluar estos alumnos ya que no tienes los requerimientos.");
+//
+//		} else
+//			imprimir("La materia que ingresaste no existe");
+//
+//	}
 
 	public static void mostrarMenuMaterias(Anio anio) {
-		for (Integer i = 0; i < anio.getMaterias().length; i++) {
-			if (anio.getMaterias()[i] != null) {
-			}
-			imprimir(i + " - " + anio.getMaterias()[i].getNombre());
+		Integer i = 0;
+		for (Materia materia : anio.getMaterias()) {
+			imprimir(i++ + " - " + materia.getNombre());
 		}
+		
 	}
 
 	private static void asistencia(Institucion nueva) {
@@ -359,16 +358,14 @@ public class GestorDeInstituciones {
 		mostrarMenuPrimariaSecundaria();
 		Integer index = pedirInt("Ingrese numero");
 
-		Anio curso = nueva.getSecundaria().getAnios()[index - 1];
-		for (Integer i = 0; i < curso.getAlumnos().length; i++) {
-			if (curso.getAlumnos()[i] != null) {
-				Boolean confirmar = preguntarPresencia(curso.getAlumnos()[i]);
-				if (!curso.tomarAsistencia(fecha, curso.getAlumnos()[i], confirmar)) {
-					imprimir("Ocurrio un error... Dejaras de tomar asistencia");
-					break;
-				}
-			}
-		}
+		Anio curso = nueva.getSecundaria().getAnios().get(index -1);
+	
+		for (Alumno alumno : curso.getAlumnos()) {
+			Boolean confirmar = preguntarPresencia(alumno);
+			if (!curso.tomarAsistencia(fecha, alumno, confirmar)) {
+				imprimir("Ocurrio un error... Dejaras de tomar asistencia");
+				break;
+		}}
 	}
 
 	private static void tomarListaPrimaria(Institucion nueva, Fecha fecha) {
@@ -376,31 +373,27 @@ public class GestorDeInstituciones {
 		Integer index = pedirInt("Ingrese numero");
 
 		Grado curso = nueva.getPrimaria().getGrados()[index - 1];
-		for (Integer i = 0; i < curso.getAlumnos().length; i++) {
-			if (curso.getAlumnos()[i] != null) {
-				Boolean confirmar = preguntarPresencia(curso.getAlumnos()[i]);
-				if (!curso.tomarAsistencia(fecha, curso.getAlumnos()[i], confirmar)) {
-					imprimir("Ocurrio un error... Dejaras de tomar asistencia");
-					break;
-				}
-			}
-		}
+
+		for (Alumno alumno : curso.getAlumnos()) {
+			Boolean confirmar = preguntarPresencia(alumno);
+			if (!curso.tomarAsistencia(fecha, alumno, confirmar)) {
+				imprimir("Ocurrio un error... Dejaras de tomar asistencia");
+				break;
+		}}
 	}
 
 	private static void tomarListaJardin(Institucion nueva, Fecha fecha) {
 		mostrarMenuDeColoresDeSala();
 		Integer index = pedirInt("Ingrese numero");
+		
+		Sala salita = nueva.getJardin().getSalitas().get(index -1);
 
-		Sala salita = nueva.getJardin().getSalitas().get(index-1);
-		for (Integer i = 0; i < salita.getAlumnos().length; i++) {
-			if (salita.getAlumnos()[i] != null) {
-				Boolean confirmar = preguntarPresencia(salita.getAlumnos()[i]);
-				if (!salita.tomarAsistencia(fecha, salita.getAlumnos()[i], confirmar)) {
-					imprimir("Ocurrio un error... Dejaras de tomar asistencia");
-					break;
-				}
-			}
-		}
+		for (Alumno alumno : salita.getAlumnos()) {
+			Boolean confirmar = preguntarPresencia(alumno);
+			if (!salita.tomarAsistencia(fecha, alumno, confirmar)) {
+				imprimir("Ocurrio un error... Dejaras de tomar asistencia");
+				break;
+		}}
 	}
 
 	private static Boolean preguntarPresencia(Alumno alumno) {
@@ -463,7 +456,7 @@ public class GestorDeInstituciones {
 			Integer index;
 			mostrarAniosExistentes(nueva);
 			index = pedirInt("Indica la sala a gestionar.");
-			aula = nueva.getSecundaria().getAnios()[index - 1];
+			aula = nueva.getSecundaria().getAnios().get(index -1);
 			mostrarMenuModificaciones();
 			index = pedirInt("Ingrese la opcion deseada");
 			eleccion = OpcionesDeModificacion.values()[index - 1];
@@ -473,13 +466,13 @@ public class GestorDeInstituciones {
 				agregarAlumno(aula);
 				break;
 			case AGREGAR_DOCENTE:
-				asignarDocente(aula, nueva);
+				//asignarDocente(aula, nueva);
 				break;
 			case MODIFICAR_ALUMNO:
 				modificarAlumno(aula);
 				break;
 			case MODIFICAR_DOCENTE:
-				modificarDocente(aula);
+				//modificarDocente(aula);
 				break;
 			case VOLVER:
 				break;
@@ -564,7 +557,7 @@ public class GestorDeInstituciones {
 	private static void modificarDocente(Sala sala) {
 		do {
 			Integer dni = pedirInt("Ingrese DNI del Docente");
-			Docente maestro = sala.buscarMaestroDNI(dni);
+			Docente maestro = sala.buscarMaestroPorDNI(dni);
 			if (maestro != null) {
 				
 					if (sala.bajaDocente(dni)) {
@@ -592,17 +585,17 @@ public class GestorDeInstituciones {
 
 	}
 
-	private static void modificarDocente(Anio anio) {
-		if (anio.getProfesor() != null) {
-			
-				if (anio.bajaDocente()) {
-					imprimir("Se elimino correctamente.");
-				} else
-					imprimir("Algo salio mal.");
-		} else
-			imprimir("No hay un docente ingresado");
-
-	}
+//	private static void modificarDocente(Anio anio) {
+//		if (anio.getProfesor() != null) {
+//			
+//				if (anio.bajaDocente()) {
+//					imprimir("Se elimino correctamente.");
+//				} else
+//					imprimir("Algo salio mal.");
+//		} else
+//			imprimir("No hay un docente ingresado");
+//
+//	}
 
 	private static void modificarAlumno(Sala sala) {
 		Integer dni = pedirInt("Ingrese DNI de alumno");
@@ -766,7 +759,7 @@ public class GestorDeInstituciones {
 		Integer dni;
 		do {			
 			 dni = pedirInt("Ingresar dni del docente");
-			if (nueva.buscarDocente(dni) != null && sala.agregarMaestro(nueva.buscarDocente(dni))) {
+			if (nueva.buscarDocente(dni) != null && sala.asignarMaestro(nueva.buscarDocente(dni))) {
 				imprimir("Se agrego correctamente");
 			} else imprimir("Error al agregar");
 			confirmacion = pedirChar("¿Continuar? Si, No");
@@ -782,14 +775,14 @@ public class GestorDeInstituciones {
 			imprimir("Error al agregar");
 	}
 
-	private static void asignarDocente(Anio anio, Institucion nueva) {	
-		Materia materia = crearMateria(anio);
-		Integer dni = pedirInt("Ingresar dni del docente");
-		if (nueva.buscarDocente(dni) != null && anio.asignarDocente(nueva.buscarDocente(dni), materia)) {
-			imprimir("Se agrego correctamente");
-		} else
-			imprimir("Error al agregar");
-	}
+//	private static void asignarDocente(Anio anio, Institucion nueva) {	
+//		Materia materia = crearMateria(anio);
+//		Integer dni = pedirInt("Ingresar dni del docente");
+//		if (nueva.buscarDocente(dni) != null && anio.asignarDocente(nueva.buscarDocente(dni), materia)) {
+//			imprimir("Se agrego correctamente");
+//		} else
+//			imprimir("Error al agregar");
+//	}
 
 	private static void mostrarMenuPrincipal() {
 
@@ -849,10 +842,10 @@ public class GestorDeInstituciones {
 
 	private static void mostrarAniosExistentes(Institucion nueva) {
 		imprimir("Años:");
-		for (Integer i = 0; i < nueva.getSecundaria().getAnios().length; i++) {
-			if (nueva.getSecundaria().getAnios()[i] != null) {
-				imprimir(i + 1 + " -" + nueva.getSecundaria().getAnios()[i].toString());
-			}
+		Integer i = 0;
+		
+		for (Anio anio : nueva.getSecundaria().getAnios()) {
+			imprimir(i++ + 1 + " -" + anio.toString());
 		}
 	}
 
@@ -940,7 +933,7 @@ public class GestorDeInstituciones {
 	private static void crearSalitas(Institucion nueva) {
 		ColorDeSala colores[] = ColorDeSala.values();
 	
-		for (Integer i = 0; i < nueva.getJardin().getCantidadSalitas() ; i++) {
+		for (Integer i = 0; i < colores.length ; i++) {
 			Sala salita = new Sala(colores[i]);
 			nueva.getJardin().crearSalita(salita);
 		}
@@ -949,7 +942,7 @@ public class GestorDeInstituciones {
 	private static void crearGrados(Institucion nueva) {
 		Numero anios[] = Numero.values();
 
-		for (Integer i = 0; i < nueva.getPrimaria().getGrados().length; i++) {
+		for (Integer i = 0; i < anios.length; i++) {
 			Grado grado = new Grado(anios[i]);
 			nueva.getPrimaria().crearGrados(grado);
 
@@ -959,10 +952,12 @@ public class GestorDeInstituciones {
 	private static void crearAnios(Institucion nueva) {
 		Numero anios[] = Numero.values();
 
-		for (Integer i = 0; i < nueva.getSecundaria().getAnios().length; i++) {
+		for (Integer i = 0; i < anios.length; i++) {
 			Anio grado = new Anio(anios[i]);
 			nueva.getSecundaria().crearAnios(grado);
 		}
+		
+		
 	}
 
 	private static Alumno crearAlumno() {

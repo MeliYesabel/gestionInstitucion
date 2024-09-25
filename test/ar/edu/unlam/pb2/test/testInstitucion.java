@@ -13,8 +13,7 @@ public class testInstitucion {
 		Institucion ins = new Institucion(nombre);
 		assertNotNull(ins);
 		assertEquals(nombre, ins.getNombre());
-		}
-	
+		}	
 	@Test	
 	public void incorporarUnDocenteALaInstitucion(){
 		Docente nuevo = new Docente("Melina", 11111111);
@@ -35,8 +34,7 @@ public class testInstitucion {
 		
 		Docente buscado = ins.buscarDocente(dni);
 		assertEquals(nuevo, buscado);		
-	}
-	
+	}	
 	@Test
 	public void darDeBajaUnDocente() {
 		Integer dni = 11111111;
@@ -48,8 +46,7 @@ public class testInstitucion {
 		
 		Docente buscado = ins.buscarDocente(dni);
 		assertEquals(nuevo, buscado);		
-	}
-	
+	}	
 	@Test	
 	public void noIncorporarDosDocentesConElMismoDNI(){
 		Integer dni = 1;
@@ -60,8 +57,7 @@ public class testInstitucion {
 		Docente segundo = new Docente(nombre, dni);
 		Boolean validacion = ins.incoportarDocente(segundo);
 		assertFalse(validacion);		
-	}
-	
+	}	
 	@Test
 	public void crearJardin() {
 		String nombre = "Unlam";			
@@ -77,8 +73,7 @@ public class testInstitucion {
 		Boolean validacion = ins.getJardin().crearSalita(sala);
 		
 		assertTrue(validacion);
-	}
-	
+	}	
 	@Test
 	public void crearSalaCELESTEYSalaRoja() {
 		String nombre = "Unlam";			
@@ -90,8 +85,7 @@ public class testInstitucion {
 		assertTrue(validacionCELESTE);
 		assertTrue(validacionRoja);
 		
-	}
-	
+	}	
 	@Test 
 	public void noCrearDosSalasCELESTEDosVeces() {
 		String nombre = "Unlam";			
@@ -101,9 +95,7 @@ public class testInstitucion {
 		Boolean validacion = ins.getJardin().crearSalita(sala);
 		
 		assertFalse(validacion);
-	}
-	
-	
+	}	
 	@Test
 	public void asignoUnMaestroASalaCELESTERegistradoComoDocenteDentroDeLaInstitucion(){
 		String nombre = "Unlam";			
@@ -117,8 +109,7 @@ public class testInstitucion {
 			validacion = sala.asignarMaestro(maestro);
 		}
 		assertTrue(validacion);	
-	}
-	
+	}	
 	@Test
 	public void asignoDosMaestroASalaCELESTERegistradoComoDocenteDentroDeLaInstitucion(){
 		String nombre = "Unlam";			
@@ -137,8 +128,7 @@ public class testInstitucion {
 			validacion = sala.asignarMaestro(segundoMaestro);
 		}
 		assertTrue(validacion);	
-	}
-	
+	}	
 	@Test
 	public void noAsignoMaestroASalaCELESTESinoEstaEnLaInstitucion(){
 		String nombre = "Unlam";			
@@ -153,8 +143,7 @@ public class testInstitucion {
 			validacion = true;
 		}
 		assertFalse(validacion);	
-	}
-	
+	}	
 	@Test
 	public void noAsignarTresMaestrosAunqueEstenRegistradosEnLaInstitucion(){
 		String nombre = "Unlam";			
@@ -179,8 +168,7 @@ public class testInstitucion {
 			validacion = sala.asignarMaestro(extra);			
 		}		
 		assertFalse(validacion);	
-	}
-	
+	}	
 	public void agregarUnAlumnoASalaCELESTE() {
 		String nombre = "Unlam";			
 		Institucion ins = new Institucion(nombre);
@@ -221,8 +209,7 @@ public class testInstitucion {
 		}
 		
 		assertFalse(validacion);		
-	}
-	
+	}	
 	public void noSuperarLaCapacidadDeUnaSala() {
 		String nombre = "Unlam";			
 		Institucion ins = new Institucion(nombre);
