@@ -33,8 +33,8 @@ public class Secundaria {
 		this.anios = anios;
 	}
 
-	public void crearAnios(Anio anio) {
-		anios.add(anio);
+	public Boolean crearAnios(Anio anio) {
+		return anios.add(anio);
 	}
 	
 	
