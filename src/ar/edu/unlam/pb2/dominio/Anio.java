@@ -10,9 +10,9 @@ public class Anio {
 	private Numero anio;
 
 	public Anio(Numero anio) {
-		this.alumnos = new ArrayList<>();
-		this.anio = anio;
+		this.alumnos = new ArrayList<>();		
 		this.materias = new ArrayList<>();
+		this.anio = anio;
 	}
 
 	public ArrayList<Alumno> getAlumnos() {
@@ -37,27 +37,56 @@ public class Anio {
 	
 	@Override
 	public String toString() {
-		return anio + ",/n[Alumnos=" + (alumnos) +  "]/n [Materias="
-				+ (materias) + "]";
+		return anio + "/n[Alumnos=" + (alumnos) +  "]/n [Materias="+ (materias) + "]";
 	}
 
-	public Boolean aproboAnioPrevio(Alumno alumno) {
-
-		if (alumno != null && alumno.getHistorial().isPrimaria()
-				&& alumno.getHistorial().getAnio()[this.anio.ordinal() - 1]) {
+	public Boolean aproboJardin(Alumno alumno) {
+		if (alumno != null && alumno.getHistorial().isPrimaria()) {
 			return true;
+		}
+		return false;
+	}
+	
+	
+	
+	public Boolean aproboAnioPrevio(Alumno alumno) {
+		
+		if (alumno != null && aproboJardin(alumno)
+				&& alumno.getHistorial().getAnio()[this.anio.ordinal()-1]){
+			return true;
+		}
+		return false;
+	}
+
+	public Boolean tieneExperienciaEnMateria(Docente profesor, Materia materia) {
+		for (int i = 0; i < profesor.getExperiencia().getMaterias().length; i++) {
+			if (profesor.getExperiencia().getMaterias()[i]!=null) {
+				if(profesor.getExperiencia().getMaterias()[i].getNombre().equals(materia.getNombre())){
+					return true;
+					}
+			}
 		}
 		return false;
 	}
 
 	public Boolean agregarAlumno(Alumno alumno) {
-
-		if (aproboAnioPrevio(alumno)) {
-			alumnos.add(alumno);
-			return true;
+		Boolean alumnoAgregado=false;
+		
+		if(getAnio().equals(Numero.PRIMERO)) {
+			if(aproboJardin(alumno)) {	
+				alumnos.add(alumno);
+				alumnoAgregado=true;
+			}
+		}else{
+			if(aproboAnioPrevio(alumno)) {
+				alumnos.add(alumno);
+				alumnoAgregado=true;	
+			}
+			
 		}
-		return false;
-	}
+		return alumnoAgregado;
+			
+		}
 
 	public Alumno buscarAlumnoDNI(Integer dni) {
 		Alumno alumnoBuscado=null;
@@ -79,6 +108,22 @@ public class Anio {
 		return bajado;
 	}
 
+	public Boolean bajaDocente(Materia materia) {
+		if (materia.getDocente() != null) {
+			materia.setDocente(null);
+			return true;
+		}
+		return false;
+	}
+
+	public Boolean asignarDocente(Docente profesor, Materia materia) {
+		if (tieneExperienciaEnMateria(profesor, materia)) {
+			materia.setDocente(profesor);
+			return true;
+		}
+		return false;
+
+	}
 
 	public Boolean tomarAsistencia(Fecha fecha, Alumno alumno, Boolean asistencia) {
 		Asistencia nueva = new Asistencia(fecha, asistencia);

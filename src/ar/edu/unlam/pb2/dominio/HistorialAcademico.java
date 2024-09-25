@@ -18,7 +18,7 @@ public class HistorialAcademico {
 		return anio;
 	}
 
-	public void setAnio(Boolean[] anio) {
+	public void setAnio(Boolean[] anio){
 		this.anio = anio;
 	}
 

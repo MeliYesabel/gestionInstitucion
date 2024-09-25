@@ -99,7 +99,7 @@ public class Grado {
 	public Boolean tomarAsistencia(Fecha fecha, Alumno alumno, Boolean asistencia) {
 		Asistencia nueva = new Asistencia(fecha, asistencia);
 		if (!existeFecha(fecha)) {
-			for (int i = 0; i < alumno.getAsistencias().size(); i++) {
+			for (Integer i = 0; i < alumno.getAsistencias().size(); i++) {
 				if (alumno.getAsistencias().get(i) != null) {
 					alumno.getAsistencias().set(i, nueva);
 					return true;
@@ -110,6 +110,7 @@ public class Grado {
 	}
 
 	private Boolean existeFecha(Fecha fecha) {
+
 
 		if (alumnos.get(0) != null && alumnos.get(0).getAsistencias().get(0) != null
 				&& alumnos.get(0).getAsistencias().get(0).getFecha().getMes() == fecha.getMes()
@@ -125,7 +126,7 @@ public class Grado {
 		
 		for (Integer i = 0; i < alumno.getEvaluaciones().size(); i++) {
 			if (alumno.getEvaluaciones().get(i) != null) {
-				alumno.getEvaluaciones().set(0, evaluacion);
+				alumno.getEvaluaciones().set(i, evaluacion);
 				break;
 			}
 		}	

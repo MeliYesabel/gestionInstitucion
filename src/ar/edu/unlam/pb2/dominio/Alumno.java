@@ -55,7 +55,13 @@ public class Alumno extends Persona{
 	public void setEvaluaciones(ArrayList<Evaluacion> evaluaciones) {
 		this.evaluaciones = evaluaciones;
 	}
+	@Override
+	public String toString() {
+		return "Alumno [nombre=" + nombre + ", dni=" + dni + ", edad=" + edad + ", historial=" + historial
+				+ ", asistencias=" + asistencias + ", evaluaciones=" + evaluaciones + "]";
+	}
 
+	
 
 
 }
