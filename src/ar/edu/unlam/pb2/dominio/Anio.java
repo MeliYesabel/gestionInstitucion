@@ -134,8 +134,8 @@ public class Anio {
 	private Boolean existeFecha(Fecha fecha) {
 
 		if (alumnos.get(0) != null && alumnos.get(0).getAsistencias().get(0) != null
-				&& alumnos[0].getAsistencias()[0].getFecha().getMes() == fecha.getMes()
-				&& alumnos[0].getAsistencias()[0].getFecha().getDia() == fecha.getDia()) {
+				&& alumnos.get(0).getAsistencias().get(0).getFecha().getMes() == fecha.getMes()
+				&& alumnos.get(0).getAsistencias().get(0).getFecha().getDia() == fecha.getDia()) {
 			return true;
 
 		}

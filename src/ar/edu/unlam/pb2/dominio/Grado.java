@@ -105,9 +105,9 @@ public class Grado {
 	public Boolean tomarAsistencia(Fecha fecha, Alumno alumno, boolean asistencia) {
 		Asistencia nueva = new Asistencia(fecha, asistencia);
 		if (!existeFecha(fecha)) {
-			for (Integer i = 0; i < alumno.getAsistencias().length; i++) {
-				if (alumno.getAsistencias()[i] != null) {
-					alumno.getAsistencias()[i] = nueva;
+			for (Integer i = 0; i < alumno.getAsistencias().size(); i++) {
+				if (alumno.getAsistencias().get(i) != null) {
+					alumno.getAsistencias().set(i, nueva);
 					return true;
 				}
 			}
@@ -117,9 +117,9 @@ public class Grado {
 
 	private Boolean existeFecha(Fecha fecha) {
 
-		if (alumnos[0] != null && alumnos[0].getAsistencias()[0] != null
-				&& alumnos[1].getAsistencias()[0].getFecha().getMes() == fecha.getMes()
-				&& alumnos[1].getAsistencias()[0].getFecha().getDia() == fecha.getDia()) {
+		if (alumnos[0] != null && alumnos[0].getAsistencias().get(0) != null
+				&& alumnos[1].getAsistencias().get(0).getFecha().getMes() == fecha.getMes()
+				&& alumnos[1].getAsistencias().get(0).getFecha().getDia() == fecha.getDia()) {
 			return true;
 
 		}
@@ -129,9 +129,9 @@ public class Grado {
 	public void cargarNota(Integer nota, Alumno alumno) {
 		Evaluacion evaluacion = new Evaluacion(nota);
 		
-		for (Integer i = 0; i < alumno.getEvaluaciones().length; i++) {
-			if (alumno.getEvaluaciones()[i] != null) {
-				alumno.getEvaluaciones()[i] = evaluacion;
+		for (Integer i = 0; i < alumno.getEvaluaciones().size(); i++) {
+			if (alumno.getEvaluaciones().get(i) != null) {
+				alumno.getEvaluaciones().set(i, evaluacion);
 				break;
 			}
 		}		
