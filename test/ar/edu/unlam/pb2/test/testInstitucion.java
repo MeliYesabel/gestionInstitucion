@@ -241,11 +241,9 @@ public class testInstitucion {
 			
 		}
 		
-		assertFalse(validacion);
-		
-		
-		
+		assertFalse(validacion);	
 	}
+	
 	
 	
 	
